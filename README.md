@@ -14,13 +14,14 @@ git clone https://github.com/waseemhnyc/cohelm.git
 ```
 2. Navigate to the frontend directory
 ```bash
-cd fronted
+cd frontend
 ```
 3. Install packages
 ```bash
 pnpm install
 ```
-4. Copy `.env.exmaple`
+4. Copy `.env.exmaple` 
+```bash
 cp .env.example .env.local
 ```
 5. Run Next JS app
