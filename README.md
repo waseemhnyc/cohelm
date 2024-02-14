@@ -31,10 +31,12 @@ pnpm dev
 
 Now that the frontend is working, it's time to get the backend up and running.
 
-6. Move back one directory, create a virutalenv and source the environment
+In another terminal move to the projects directory.
+
+6. Move into the backend, create a virutalenv and source the environment
 
 ```bash
-cd ..
+cd backend/
 python3 -m venv venv
 source venv/bin/activate
 ```
