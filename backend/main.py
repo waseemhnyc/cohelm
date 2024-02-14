@@ -113,4 +113,3 @@ async def upload_pdf(file: UploadFile = File(...)):
             return JSONResponse(status_code=400, content={"message": "File size exceeds limit"})
     else:
         return JSONResponse(status_code=400, content={"message": "File is not a PDF"})
-    

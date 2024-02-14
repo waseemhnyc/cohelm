@@ -44,58 +44,34 @@ import { Badge } from "@/components/ui/badge"
 
 import Link from "next/link"
 
-const data: Case[] = [
+const guidelines: Guideline[] = [
   {
-    caseId: "123456",
-    guideline: "Facet Joint Injection",
-    determination: "Approved",
-    status: "complete",
-    verified: true,
-    prior_auth_href: "/prior-auth/123456"
+    id: "123456",
+    name: "Facet Joint Injection",
   },
   {
-    caseId: "789012",
-    guideline: "Facet Joint Injection",
-    determination: "-",
-    status: "in progress",
-    verified: false,
-    prior_auth_href: "/prior-auth/789012"
+    id: "789012",
+    name: "Spinal Cord Stimulation",
   },
   {
-    caseId: "345678",
-    guideline: "Facet Joint Injection",
-    determination: "Approved",
-    status: "complete",
-    verified: true,
-    prior_auth_href: "/prior-auth/345678"
+    id: "345678",
+    name: "Lumbar Disc Decompression",
   },
   {
-    caseId: "901234",
-    guideline: "Facet Joint Injection",
-    determination: "Denied",
-    status: "complete",
-    verified: false,
-    prior_auth_href: "/prior-auth/901234"
+    id: "901234",
+    name: "Cervical Disc Arthroplasty",
   },
   {
-    caseId: "567890",
-    guideline: "Facet Joint Injection",
-    determination: "-",
-    status: "needs attention",
-    verified: false,
-    prior_auth_href: "/prior-auth/567890"
+    id: "567890",
+    name: "Lumbar Fusion",
   },
 ]
 
-export type Case = {
-  caseId: string
-  guideline: string
-determination: "Approved" | "Denied" | "-"
-  status: "complete" | "in progress" | "needs attention" | "failed"
-  verified: boolean
-  prior_auth_href: string
+export type Guideline = {
+  id: string
+  name: string
 }
-export const columns: ColumnDef<Case>[] = [
+export const columns: ColumnDef<Guideline>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -119,110 +95,18 @@ export const columns: ColumnDef<Case>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "caseId",
-    header: () => <div className="text-left">Case ID</div>,
-    cell: ({ row }) => <div className="lowercase">{row.getValue("caseId")}</div>,
+    accessorKey: "id",
+    header: () => <div className="text-left">Guideline ID</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("id")}</div>,
   },
   {
-    accessorKey: "determination",
-    header: ({ column }) => {
-      return (
-        <div className="text-left">
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Determination
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      )
-    },
-    cell: ({ row }) => {
-      const determination = row.getValue("determination") as string
-      return (
-        <div className="text-left font-medium">
-          {determination === "Approved" || determination === "Denied" ? (
-            <Badge>{determination}</Badge>
-          ) : (
-            determination
-          )}
-        </div>
-      )
-    },
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "guideline",
-    header: () => <div className="text-right">Guideline</div>,
-    cell: ({ row }) => {
-      const guideline = row.getValue("guideline")
-
-      return <div className="text-right font-medium">{row.getValue("guideline")}</div>
-    },
-  },
-  {
-    accessorKey: "verified",
-    header: ({ column }) => {
-      return (
-        <div className="text-right">
-          <Button
-            variant="ghost"
-            className="p-0"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Verified
-            <CaretSortIcon className="ml-2 h-4 w-4" />
-          </Button>
-        </div>
-      )
-    },
-    cell: ({ row }) => {
-      const verified = row.getValue("verified")
-
-      return <div className="text-right font-medium">{verified ? 'Yes' : 'No'}</div>
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const caseData = row.original
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <DotsHorizontalIcon className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(caseData.caseId)}
-            >
-              Copy Case ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <Link href={caseData.prior_auth_href}>
-              <DropdownMenuItem>View or Update Details</DropdownMenuItem>
-            </Link>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )
-    },
+    accessorKey: "name",
+    header: () => <div className="text-left">Guideline Name</div>,
+    cell: ({ row }) => <div className="text-left font-medium">{row.getValue("name")}</div>,
   },
 ]
 
-export function DataTableDemo() {
+export function GuidelinesTable() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -232,7 +116,7 @@ export function DataTableDemo() {
   const [rowSelection, setRowSelection] = React.useState({})
 
   const table = useReactTable({
-    data,
+    data: guidelines,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -254,10 +138,10 @@ export function DataTableDemo() {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Search for case id ..."
-          value={(table.getColumn("caseId")?.getFilterValue() as string) ?? ""}
+          placeholder="Search for guideline..."
+          value={(table.getColumn("id")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("caseId")?.setFilterValue(event.target.value)
+            table.getColumn("id")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -288,7 +172,7 @@ export function DataTableDemo() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Link href="/prior-auth" className="pl-3">
-          <Button variant="default"> <PlusCircledIcon className="mr-2 h-4 w-4" /> Create New Prior Auth</Button>
+          <Button variant="default"> <PlusCircledIcon className="mr-2 h-4 w-4" /> Create New Guideline</Button>
         </Link>
       </div>
       <div className="rounded-md border">

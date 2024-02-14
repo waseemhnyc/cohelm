@@ -1,6 +1,3 @@
-"use client"
-
-import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
@@ -19,7 +16,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
-import { Skeleton } from "@/components/ui/skeleton"
 
 import {
   Dialog,
@@ -30,8 +26,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 const FormSchema = z.object({
   items: z.array(z.string()).refine((value) => value.some((item) => item), {
@@ -57,10 +51,6 @@ export type GuidelinesQuestionCardData = {
 };
 
 export function GuidelinesQuestionCard({ data }: { data: GuidelinesQuestionCardData}) {
-
-  console.log(data)
-  // data["evidence"] --> use this to display the source documents
-  // data["reaosning"] --> use this as prompt for the user to update
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),

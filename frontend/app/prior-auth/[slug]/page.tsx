@@ -7,7 +7,7 @@ import Link from "next/link";
 import { GuidelinesQuestionCard, GuidelinesQuestionCardData } from "@/components/guidelines/question-card";
 import { Loading } from "@/components/loading";
 import { Button } from "@/components/ui/button";
-import { CheckCircledIcon, Pencil2Icon } from "@radix-ui/react-icons";
+import { CheckCircledIcon, Pencil2Icon, ArrowDownIcon } from "@radix-ui/react-icons";
 import { Badge } from "@/components/ui/badge";
 
 export default function PriorAuthPage() {
@@ -32,7 +32,7 @@ export default function PriorAuthPage() {
   }, []);
 
   return (
-    <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
+    <div className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
 
     <h1 className="text-4xl font-bold leading-tight text-left">
         Case Details
@@ -113,7 +113,10 @@ export default function PriorAuthPage() {
                   </div>
                   <div className="flex flex-col space-y-10">
                     {questions?.map((item: GuidelinesQuestionCardData, index: number) => 
-                      <GuidelinesQuestionCard key={index} data={item} />
+                      <>
+                        <GuidelinesQuestionCard key={index} data={item} />
+                        {index !== questions.length - 1 && <ArrowDownIcon className="h-6 w-6 self-left" />}
+                      </>
                     )}
                   </div>
                   <div className="mt-6 flex items-center justify-end gap-x-6">
@@ -126,6 +129,6 @@ export default function PriorAuthPage() {
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
 }
