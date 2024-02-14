@@ -1,11 +1,10 @@
 # co:helm
 
-![Demo](demo.gif)
+[![Demo](imgs/prior-auth.png)](https://youtu.be/DPLlAc-V-Ws)
 
 Project made with:
 - [<a href="https://github.com/shadcn/next-template">Shadcn - Next JS Template</a>](https://github.com/shadcn/next-template)
 - [<a href="https://github.com/waseemhnyc/fastapi-openai-render">FastAPI template</a>](https://github.com/waseemhnyc/fastapi-openai-render)
-
 ## Installation 🛠️
 
 1. Clone the repository
